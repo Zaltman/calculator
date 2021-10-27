@@ -1,68 +1,130 @@
-let result = 0;
-let input = 0;
-function add(input) {
-  input = parseInt(input);
-  result += input;
-  resultLine.textContent = result;
-}
-function subtract(input) {
-  result -= input;
-  resultLine.textContent = result;
-}
-function multiply(input) {
-  result *= input;
-  resultLine.textContent = result;
-}
-function divide(input) {
-  result /= input;
-  resultLine.textContent = result;
-}
-function operate(num2, operator) {
-  if (operator == '+') {
-    add(num2);
-  }
-  if (operator == '-') {
-    subtract(num2);
-  }
-  if (operator == '*') {
-    multiply(num2);
-  }
-  if (operator == '/') {
-    divide(num2);
-  }
+let output = 0;
+let num1 = 0;
+let num2 = 0;
+let operator;
+
+function add(num1, num2) {
+  num1 = parseFloat(num1);
+  num2 = parseFloat(num2);
+  output = num1 + num2;
+
+  return updateOutput(output);
 }
 
-let resultLine = document.getElementById('result');
-resultLine.textContent = result;
+function subtract(num1, num2) {
+  num1 = parseFloat(num1);
+  num2 = parseFloat(num2);
+  output = num1 - num2;
+  return updateOutput(output);
+}
 
-let buttons = document.querySelectorAll('.button');
-buttons.forEach((button) => {
+function multiply(num1, num2) {
+  num1 = parseFloat(num1);
+  num2 = parseFloat(num2);
+  output = num1 * num2;
+  return updateOutput(output);
+}
+
+function divide(num1, num2) {
+  num1 = parseFloat(num1);
+  num2 = parseFloat(num2);
+  output = num1 / num2;
+  return updateOutput(output);
+}
+
+function operate(operator, num1, num2) {
+  if (operator == '+') add(num1, num2);
+  if (operator == '-') subtract(num1, num2);
+  if (operator == '*') multiply(num1, num2);
+  if (operator == '/') divide(num1, num2);
+}
+
+function updateOutput() {
+  outputScreen.textContent = +parseFloat(output).toFixed(14);
+  if (outputScreen.textContent == 'Infinity')
+    outputScreen.textContent = 'Not possible';
+}
+
+function cleanMemory() {
+  output = 0;
+  outputScreen.textContent = 0;
+  num1 = 0;
+  num2 = 0;
+  operator = undefined;
+}
+
+function cleanScreen() {
+  outputScreen.textContent = '';
+  output = 0;
+}
+
+function equals() {
+  if (num2 == 0) num2 = parseFloat(output);
+  output = parseFloat(operate(operator, num1, num2));
+  num1 = outputScreen.textContent;
+  output = outputScreen.textContent;
+}
+
+const numberKeys = document.querySelectorAll('.button');
+numberKeys.forEach((button) => {
   button.addEventListener('click', function (e) {
-    console.log(e);
+    keypress = document.querySelector(`button[data-key="${e}"]`);
+    output += this.textContent;
+    updateOutput();
   });
 });
 
-window.addEventListener('keydown', function (e) {
-  const keypress = document.querySelector(`button[data-key="${e.key}"]`);
-  if (keypress.className == 'button') {
-    if (resultLine.textContent == 0) {
-      resultLine.textContent = '';
-    }
-
-    result = e.key;
-
-    resultLine.textContent += result;
-    console.log(keypress);
-  }
-  if (keypress.className == 'buttonOperator') {
-    result = resultLine.textContent;
-    result = parseInt(result);
-    console.log(typeof result);
-    add(result);
-  }
-
-  // console.log(e);
+const operatorKeys = document.querySelectorAll('.buttonOperator');
+operatorKeys.forEach((button) => {
+  button.addEventListener('click', function (e) {
+    equals();
+    keypress = document.querySelector(`button[data-key="${e}"]`);
+    operator = this.textContent;
+    num1 = parseFloat(output);
+    cleanScreen();
+    num2 = 0;
+  });
+  num1 = parseFloat(output);
 });
 
-// button.addEventListener('click', function (e) {
-//   console.log(e);
+let outputScreen = document.querySelector('#result');
+
+const equalsKey = document.querySelector('#equalsButton');
+equalsKey.addEventListener('click', equals);
+
+const clearKey = document.querySelector('#clearButton');
+clearKey.addEventListener('click', cleanMemory);
+// let resultLine = document.getElementById('result');
+// resultLine.textContent = result;
+
+// let buttons = document.querySelectorAll('.button');
+// buttons.forEach((button) => {
+//   button.addEventListener('click', function (e) {
+//     console.log(e);
+//   });
+// });
+
+// window.addEventListener('keydown', function (e) {
+//   const keypress = document.querySelector(`button[data-key="${e.key}"]`);
+//   if (keypress.className == 'button') {
+//     if (resultLine.textContent == 0) {
+//       resultLine.textContent = '';
+//     }
+
+//     result = e.key;
+
+//     resultLine.textContent += result;
+//     console.log(keypress);
+//   }
+//   if (keypress.className == 'buttonOperator') {
+//     result = resultLine.textContent;
+//     result = parseInt(result);
+//     console.log(typeof result);
+//     add(result);
+//   }
+
+//   // console.log(e);
+// });
+
+// // button.addEventListener('click', function (e) {
+// //   console.log(e);
