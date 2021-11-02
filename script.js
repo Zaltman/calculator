@@ -94,37 +94,3 @@ equalsKey.addEventListener('click', equals);
 
 const clearKey = document.querySelector('#clearButton');
 clearKey.addEventListener('click', cleanMemory);
-// let resultLine = document.getElementById('result');
-// resultLine.textContent = result;
-
-// let buttons = document.querySelectorAll('.button');
-// buttons.forEach((button) => {
-//   button.addEventListener('click', function (e) {
-//     console.log(e);
-//   });
-// });
-
-// window.addEventListener('keydown', function (e) {
-//   const keypress = document.querySelector(`button[data-key="${e.key}"]`);
-//   if (keypress.className == 'button') {
-//     if (resultLine.textContent == 0) {
-//       resultLine.textContent = '';
-//     }
-
-//     result = e.key;
-
-//     resultLine.textContent += result;
-//     console.log(keypress);
-//   }
-//   if (keypress.className == 'buttonOperator') {
-//     result = resultLine.textContent;
-//     result = parseInt(result);
-//     console.log(typeof result);
-//     add(result);
-//   }
-
-//   // console.log(e);
-// });
-
-// // button.addEventListener('click', function (e) {
-// //   console.log(e);
